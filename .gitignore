@@ -3,9 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#IDE files
+.vscode
+
 # CNN data
 **.jpg
-*.h5
+**.h5
 
 # C extensions
 *.so
