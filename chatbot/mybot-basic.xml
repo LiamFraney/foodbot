@@ -1,0 +1,117 @@
+<aiml version="1.0.1" encoding="UTF-8">
+
+<!-- Greetings and Politeness -->
+<category> <pattern> HELLO </pattern>
+  <template><random>
+<li> Hi! Nice to meet you </li>
+<li> Hello, How are you? </li>
+<li> Hello! </li>
+</random>
+</template> </category>
+
+<category> <pattern> HELLO * </pattern>
+  <template><srai>HELLO</srai></template> </category>
+
+<category> <pattern> HI </pattern>
+  <template><srai>HELLO</srai></template> </category>
+
+<category>
+      <pattern> MY NAME IS * </pattern>
+      <template>Hello <set name="name"><star/></set> </template>
+</category>
+
+<category>
+      <pattern> WHO AM I </pattern>
+      <template><condition name="name"><li value="">You have not told me your name.</li>
+      <li>You are <get name="name"/>.</li></condition></template>
+</category>
+
+<category>
+      <pattern> WHAT IS MY NAME </pattern>
+      <template><condition name="name"><li value="">You have not told me your name.</li>
+      <li>You are <get name="name"/>.</li></condition></template>
+</category>
+
+<category> <pattern> HOW ARE YOU </pattern>
+  <template>I'm functioning within normal parameters, thanks for asking.</template></category>
+
+<category><pattern> I AM FINE </pattern>
+  <template>That's good to know. What would you like to discuss regarding food?</template></category>
+
+<category><pattern> BYE </pattern>
+  <template>Bye! Nice talking to you. You take care now.</template></category>
+
+<category><pattern> GOODBYE </pattern>
+  <template><srai>BYE</srai></template></category>
+
+<category><pattern> EXIT </pattern>
+  <template><srai>BYE</srai></template></category>
+
+<category> <pattern> THANKS </pattern>
+  <template>You are welcome.</template></category>
+
+<category> <pattern> THANK YOU </pattern>
+  <template><srai>THANKS</srai></template></category>
+
+<category> <pattern> CHEERS </pattern>
+  <template>Sure mate.</template></category>
+
+<category> <pattern> CHEERS * </pattern>
+  <template>Sure mate.</template></category>
+
+<category> <pattern> CHEERS </pattern>
+  <template>Sure mate.</template></category>
+
+  <category> <pattern> WHAT IS A FRUIT </pattern>
+  <template>"the sweet and fleshy product of a tree or other plant that contains seed and can be eaten as food."
+  </template></category>
+
+  <category> <pattern> WHO MADE YOU </pattern>
+  <template>Liam Franey is my creator 
+  </template></category>
+
+ <category> <pattern> WHAT IS A VEGETABLE </pattern>
+  <template>"a plant or part of a plant used as food, such as a cabbage, potato, turnip, or bean."
+  </template></category>
+
+ <category> <pattern> WHY IS PIZZA THE BEST FOOD </pattern>
+  <template>Bread cheese and meat is just a winning combo.
+  </template></category>
+
+ <category> <pattern> WHAT FOOD DO YOU LIKE </pattern>
+  <template>I eat nothing but RAM
+  </template></category>
+
+<category>
+      <pattern> MY FAVOURITE FOOD IS * </pattern>
+      <template>Hello <set name="name"><star/></set> </template>
+</category>
+
+<category>
+      <pattern> WHAT IS MY FAVOURITE FOOD </pattern>
+      <template><condition name="FOOD"><li value="">You have not told me your favoute food.</li>
+      <li><get name="FOOD"/> is the best!</li></condition></template>
+</category>
+
+<!--- food API -->
+<category><pattern> HOW TO MAKE * </pattern>
+  <template>#1$<star index="1"/></template></category>
+
+<category><pattern> TELL ME A JOKE </pattern>
+  <template>#2$<star index="1"/></template></category>
+
+<category><pattern> TELL ME A FUN FACT</pattern>
+  <template>#3$<star index="1"/></template></category>
+
+  <category><pattern> HOW MUCH * </pattern>
+  <template>#4$<star index="1"/></template></category>
+
+<!--- Image classification -->
+  <category><pattern> WHAT IS * </pattern>
+  <template>#5$<star index="1"/></template></category>
+
+<!-- Default reaction -->
+<category><pattern> * </pattern>
+  <template>#99$<star index="1"/></template></category>
+
+</aiml>
