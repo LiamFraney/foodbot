@@ -2,6 +2,8 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2D, BatchNormalization
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.callbacks import ModelCheckpoint
+import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -19,16 +21,16 @@ if gpus:
 print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
 
 class_names = []
-with open("food41/meta/meta/classes.txt") as reader:
+with open("food41\meta\meta\classes.txt") as reader:
     for class_name in reader:
         class_names.append(class_name.strip())
 
-dataset_dir = "food41/images"
+dataset_dir = "food41\images"
 model_filename = "model.h5"
 batch_size = 32
-num_epochs = 10
-img_height = 100
-img_width = 100
+num_epochs = 100
+img_height = 150
+img_width = 150
 color_bands = 3
 
 input_shape = (img_height, img_width, color_bands)
@@ -91,11 +93,33 @@ model.compile(optimizer="adam",
             loss="categorical_crossentropy",
             metrics=["accuracy"])
 
-model.fit_generator(
+
+cp = ModelCheckpoint(f"{model_filename}.best", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=False, mode='auto', save_freq="epoch")
+
+history = model.fit_generator(
     train_generator,
     steps_per_epoch = train_generator.samples // batch_size,
     validation_data = validation_generator, 
     validation_steps = validation_generator.samples // batch_size,
-    epochs = num_epochs)
+    epochs = num_epochs,
+    callbacks=[cp])
 
 model.save(model_filename)
+
+# Plot training & validation accuracy values
+plt.plot(history.history['acc'])
+plt.plot(history.history['val_acc'])
+plt.title('Model accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Test'], loc='upper left')
+plt.show()
+
+# Plot training & validation loss values
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Model loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Test'], loc='upper left')
+plt.show()

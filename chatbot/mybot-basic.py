@@ -85,33 +85,32 @@ def handle_answer(answer):
 
         elif cmd == 5:
             q = params[1]
-            parsed_name = None
-            for word in q.split(" "):
-                if "jpg" in word or "png" in word:
-                    parsed_name = word
-            if not parsed_name:
+            name = 0
+            for part in q.split(" "):
+                if "jpg" in part or "png" in part:
+                    name = part
+            if name == 0:
                 return "Input is neither a valid file nor url"
-            if os.path.exists(parsed_name):
-                raw_image = cv2.imread(parsed_name)
+            if os.path.exists(name):
+                npImage = cv2.imread(name)
             else:
                 try:
-                    file_to_delete = parsed_name.split("/")[-1]
-                    urllib.request.urlretrieve(parsed_name, file_to_delete)
-                    raw_image = cv2.imread(file_to_delete)
-                    os.remove(file_to_delete)
+                    filename = name.split("/")[-1]
+                    urllib.request.urlretrieve(name, filename)
+                    npImage = cv2.imread(filename)
+                    os.remove(filename)
                 except Exception as e:
                     print(e)
                     return "Input is neither a valid file nor url"
-            img_rows = 100
-            img_cols = 100
-            color_channels = 3
-            input_shape = (img_rows, img_cols, color_channels)
-            scaled_image = cv2.resize(raw_image, dsize=(img_rows, img_cols), interpolation=cv2.INTER_CUBIC)
-            cv2.imwrite("scaled.jpg", scaled_image)
-            scaled_image = scaled_image/255
-            image_array = scaled_image.reshape(1, img_rows, img_cols, color_channels)
+            rows = 100
+            cols = 100
+            color_bands = 3
+            input_shape = (rows, cols, color_bands)
+            scaledImage = cv2.resize(npImage, dsize=(rows, cols), interpolation=cv2.INTER_CUBIC)
+            scaledImage = scaledImage/255
+            imageArray = scaledImage.reshape(1, rows, cols, color_bands)
 
-            predictions = model.predict(image_array)
+            predictions = model.predict(imageArray)
             
             print(classnames[numpy.argmax(predictions)])
 

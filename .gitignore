@@ -9,6 +9,7 @@ __pycache__/
 # CNN data
 **.jpg
 **.h5
+*.h5.*
 
 # C extensions
 *.so
