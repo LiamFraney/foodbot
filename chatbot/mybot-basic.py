@@ -102,8 +102,8 @@ def handle_answer(answer):
                 except Exception as e:
                     print(e)
                     return "Input is neither a valid file nor url"
-            rows = 100
-            cols = 100
+            rows = 150
+            cols = 150
             color_bands = 3
             input_shape = (rows, cols, color_bands)
             scaledImage = cv2.resize(npImage, dsize=(rows, cols), interpolation=cv2.INTER_CUBIC)
